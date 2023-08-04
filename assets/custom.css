@@ -1,3 +1,31 @@
+/* Override font sizes */
+html body article {
+  font-size: 12pt;
+}
+
+/* Override article width via tailwind */
+.max-w-3xl {
+  max-width: 61rem;
+}
+
+/* Code block */
+:root {
+  --code-bg-color: #c1c1c1;
+}
+:is(.dark article) {
+    --code-bg-color: #7b7c7c;
+}
+article code {
+  background: var(--code-bg-color);
+  padding: 0 5px;
+}
+article code::before{
+  content: "" !important;
+}
+article code::after {
+  content: "" !important;
+}
+
 /* Animation */
 @keyframes scale {
   to {
@@ -22,7 +50,6 @@
 
 .filename div {
   font-size: 14px;
-  font-family: "Lucida Console", Monaco, monospace;
   color: #c0c5ce;
   background: #272822;
   display: inline-block;

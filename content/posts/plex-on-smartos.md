@@ -196,7 +196,7 @@ branded zones have a special path mounted into their filesystem called
 binaries and tools out of this path is not recommended.  However some tools
 such as dtrace, prstat, pfiles, and pargs are known to work very well.  A
 convenient way to access this is by sticking the tools at the end of your
-$PATH, `export PATH=$PATH:/native/usr/bin:/native/usr/sbin:/native/sbin`.
+$PATH by adding `/native/usr/bin`, `/native/usr/sbin`, and `/native/sbin`.
 
 ```
 root@plexlx:~# pgrep -l -f Plex
