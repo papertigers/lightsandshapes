@@ -19,7 +19,7 @@ article code {
   background: var(--code-bg-color);
   padding: 0 5px;
 }
-article code::before{
+article code::before {
   content: "" !important;
 }
 article code::after {
@@ -35,6 +35,30 @@ article code::after {
 
 .hover\:animate-scale:hover {
   animation: scale 1000ms ease-in-out forwards;
+}
+
+/* img modifications */
+img[src$='#center']
+{
+    display: block;
+    margin: 0.7rem auto; /* you can replace the vertical '0.7rem' by
+                            whatever floats your boat, but keep the
+                            horizontal 'auto' for this to work */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatleft']
+{
+    float:left;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatright']
+{
+    float:right;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
 }
 
 /* filename shortcode */
@@ -59,3 +83,23 @@ article code::after {
   padding-top: 16px;
   padding-bottom: 6px;
 }
+
+/* Notes */
+.authornote {
+  border-bottom: 0.095rem dashed;
+  border-top: 0.095rem dashed;
+  width: 70%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.authornote p {
+  font-size: 0.80rem;
+  height: auto;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+

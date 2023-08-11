@@ -61,14 +61,14 @@ currently logged in over ssh.
 
 #### tun driver
 
-Typically when dealing with VPN like software you create virtual network devices.
-These are devices which are not physical network adapters themselves, but rather
-they are kernel virtual devices which may sit on top of physical hardware. The
-device we are interested in is called a *TUN/TAP* device. This is a device that
-allows packets to be delivered to a connected user space program. A *TUN* device
-sits at [layer 3][] and allows a user space program like tailscale to
-encrypt/decrypt packets on the wire by creating a link between hosts. To
-install the driver on OmniOS you can run:
+Typically when dealing with VPN like software you create virtual network
+devices. These are devices which are not physical network adapters themselves,
+but rather they are kernel virtual devices which may sit on top of physical
+hardware. The device we are interested in is called a *TUN/TAP* device. This
+is a device that allows packets to be delivered to a connected user space
+program. A *TUN* device sits at [layer 3][] and allows a user space program
+like tailscale to encrypt/decrypt packets on the wire by creating a link between
+hosts. To install the driver on OmniOS you can run:
 
 ```
 # pkg install pkg:/driver/tuntap
@@ -76,12 +76,12 @@ install the driver on OmniOS you can run:
 
 ### Zone setup
 
-Tailscale can be setup to run directly in the globalzone or in a non globalzone.
-I am opting to show you how to deploy it in a zone in this case.
+Tailscale can be set up to run directly in the globalzone or in a non
+globalzone. I am opting to show you how to deploy it in a zone in this case.
 
-First we are going to setup a *vnic* for the zone from the gz. This is important
-if you desire to make your zone an [exitnode][]. If you create the vnic on
-demand in the zones configuration and assign it an IP address, then the
+First we are going to set up a *vnic* for the zone from the gz. This is
+important if you desire to make your zone an [exitnode][]. If you create the
+vnic on demand in the zones configuration and assign it an IP address, then the
 `allowed-ips` link-prop will be set. This will prevent you from allowing your
 zone to act as a packet forwarder preforming NAT for your *tailnet*. From the
 globalzone create a *vnic* over the interface of your choice like so:
@@ -90,8 +90,8 @@ globalzone create a *vnic* over the interface of your choice like so:
 # dladm create-vnic -l igb1 tailscale0
 ```
 
-With the *vnic* created we can move onto creating the zone. This can be accomplished
-by running:
+With the *vnic* created we can move onto creating the zone. This can be
+accomplished by running:
 
 ```
 # zadm create -b sparse tailnode
@@ -138,7 +138,7 @@ Next we can boot the zone and wait for all services to come online:
 root@tailnode:~# svcs # wait for everything to transition to online
 ```
 
-The first thing we should do in our new zone is setup an IP address on the
+The first thing we should do in our new zone is set up an IP address on the
 network and assign a default route:
 
 ```
