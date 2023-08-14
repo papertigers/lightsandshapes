@@ -5,6 +5,8 @@ category: "systems programming"
 tags: ["libcontract", "illumos", "rust", "ffi"]
 ---
 
+![tailscale + omnios](/images/rust-contracts.png)
+
 ### Setting the stage
 
 I recently had a FaceTime call with my friend [Dave](https://daveeddy.com)
@@ -33,7 +35,7 @@ contracts can be orphaned by the controlling process and inherited by another.
 This behavior is easily observable with `ptree` and
 `ctstat`:
 
-```
+```text
 $ ptree -gc $$
 6172   zsched
 └─[process contract 2798: svc:/network/ssh:default]
@@ -163,7 +165,7 @@ We can use `ctrun` on illumos to put the service in a contract allowing the
 controlling process to keep track of all the children that were created. Here's
 an example of what that looks like:
 
-{{< highlight text "hl_lines=15-18 28-30">}}
+{{< highlight text "hl_lines=13-16 26-28">}}
 $ ctrun -l child ./a.out &
 [1] 2714
 parent: 2717
@@ -218,7 +220,7 @@ automatically generating Rust FFI bindings to the C library using [bindgen][].
 Let's start by creating a new library crate, and adding `bindgen` to to the
 build-dependencies:
 
-```
+```text
 $ cargo new --lib contract-sys
 $ cd contract-sys
 $ cargo add --build bindgen
@@ -279,7 +281,7 @@ The **contract-sys** crate has since been published to
 We have our bindings, and now it's time to use them! Create a new project and
 add our dependency:
 
-```
+```text
 $ cargo new contract-example
 $ cd contract-example
 $ cargo add contract-sys libc anyhow
@@ -412,7 +414,7 @@ println!("Here are the pids in the contract:\n {pids:#?}");
 
 The moment of truth:
 
-```
+```text
 $ cargo r -- 2621
    Compiling contract-example v0.1.0 (/home/link/src/contract-example)
     Finished dev [unoptimized + debuginfo] target(s) in 0.55s
@@ -490,7 +492,7 @@ To turn on some of the debugging features we can set the `UMEM_DEBUG`
 environment variable as well as `UMEM_LOGGING`. Both of these variables are
 described in [umem_debug(3MALLOC)][umem_debug]:
 
-```
+```text
 $ UMEM_LOGGING=transaction UMEM_DEBUG=default ./target/debug/contract-example 2621
 Here are the pids in the contract:
  [
