@@ -5,7 +5,7 @@ category: "systems programming"
 tags: ["libcontract", "illumos", "rust", "ffi"]
 ---
 
-![tailscale + omnios](/images/rust-contracts.png)
+![ferris and an illumos contract](/images/rust-contracts.png)
 
 ### Setting the stage
 
