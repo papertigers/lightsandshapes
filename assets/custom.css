@@ -84,6 +84,39 @@ img[src$='#floatright']
   padding-bottom: 6px;
 }
 
+/* terminalbar shortcode */
+.terminalbar {
+  background: #363737;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  position: relative;
+  bottom: -35px;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+.terminalbar .dot {
+  height: 11px;
+  width: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.terminalbar .dot.red {
+  background-color: #ff5f57;
+}
+
+.terminalbar .dot.yellow {
+  background-color: #ffbc2e;
+}
+
+.terminalbar .dot.green {
+  background-color: #2bc841;
+}
+
+
 /* Notes */
 .authornote {
   border-bottom: 0.095rem dashed;

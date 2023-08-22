@@ -26,6 +26,7 @@ There are many ways to manage zones on an illumos system such as [zonecfg(8)][]
 and [zoneadm(8)][], however in this post I am going to be making use of
 [zadm(1)][]. If you don't have `zadm` on your system, you can easily install it:
 
+{{< terminal >}}
 ```
 # pkg install zadm
 ```
@@ -70,6 +71,7 @@ program. A *TUN* device sits at [layer 3][] and allows a user space program
 like tailscale to encrypt/decrypt packets on the wire by creating a link between
 hosts. To install the driver on OmniOS you can run:
 
+{{< terminal >}}
 ```
 # pkg install pkg:/driver/tuntap
 ```
@@ -86,6 +88,7 @@ vnic on demand in the zones configuration and assign it an IP address, then the
 zone to act as a packet forwarder preforming NAT for your *tailnet*. From the
 globalzone create a *vnic* over the interface of your choice like so:
 
+{{< terminal >}}
 ```
 # dladm create-vnic -l igb1 tailscale0
 ```
@@ -93,6 +96,7 @@ globalzone create a *vnic* over the interface of your choice like so:
 With the *vnic* created we can move onto creating the zone. This can be
 accomplished by running:
 
+{{< terminal >}}
 ```
 # zadm create -b sparse tailnode
 ```
@@ -132,6 +136,7 @@ physical="tailscale0"
 
 Next we can boot the zone and wait for all services to come online:
 
+{{< terminal >}}
 ```
 # zadm boot tailnode
 # zlogin tailnode
@@ -141,6 +146,7 @@ root@tailnode:~# svcs # wait for everything to transition to online
 The first thing we should do in our new zone is set up an IP address on the
 network and assign a default route:
 
+{{< terminal >}}
 ```
 root@tailnode:~# ipadm create-addr -T static -a 10.0.1.58/24 tailscale0/v4
 root@tailnode:~# route -p add default 10.0.1.1
@@ -155,6 +161,7 @@ requests to various encompassing projects that will one day get us official
 support. Until then we can use the builds from his
 [github releases](https://github.com/nshalman/tailscale/releases).
 
+{{< terminal >}}
 ```
 root@tailnode:~# cd /var/tmp/
 root@tailnode:/var/tmp# wget -q https://github.com/nshalman/tailscale/releases/download/v1.46.1-sunos/tailscaled-illumos
@@ -209,6 +216,7 @@ service start automatically at boot. Edit the following file:
 
 Now we can import this manifest into SMF and ensure it's online:
 
+{{< terminal >}}
 ```
 root@tailnode:/var/tmp# svccfg import tailscale.xml
 root@tailnode:/var/tmp# svcs tailscale
@@ -219,6 +227,7 @@ online          7:23:09 svc:/ooce/network/tailscale:default
 Before we can do anything useful we need to connect to tailscale and login,
 which can be done like so:
 
+{{< terminal >}}
 ```
 root@tailnode:~# /opt/tailscale/sbin/tailscale up
 ```
@@ -246,6 +255,7 @@ map tailscale0 100.64.0.0/10 -> 0/32
 Then we can enable `ipfilter` (which controls ipnat) and enable forwarding like
 so:
 
+{{< terminal >}}
 ```
 root@tailnode:~# svcadm enable ipfilter
 root@tailnode:~# svcadm enable ipv4-forwarding
@@ -254,6 +264,7 @@ root@tailnode:~# svcadm enable ipv4-forwarding
 Finally we can tell our zone to act as an exitnode (note that you will have to
 go approve this configuration in the tailscale web console):
 
+{{< terminal >}}
 ```
 root@tailnode:~# /opt/tailscale/sbin/tailscale set --advertise-exit-node
 ```

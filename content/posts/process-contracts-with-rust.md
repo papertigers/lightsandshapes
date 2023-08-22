@@ -35,6 +35,7 @@ contracts can be orphaned by the controlling process and inherited by another.
 This behavior is easily observable with `ptree` and
 `ctstat`:
 
+{{< terminal >}}
 ```text
 $ ptree -gc $$
 6172   zsched
@@ -111,6 +112,7 @@ In the above example we end up with a program where there is a parent, child,
 and grandchild relationship. If we run this program we can see that laid out for
 us by `ptree`:
 
+{{< terminal >}}
 ```text
 $ ./a.out
 parent: 860
@@ -134,6 +136,7 @@ If we pretend that the bash process is our service manager for a moment -- what
 happens if we have the child (the middle-process) exit leaving only the parent
 and grandchild?
 
+{{< terminal >}}
 ```text
 $ bg
 [1]+ ./a.out &
@@ -165,6 +168,7 @@ We can use `ctrun` on illumos to put the service in a contract allowing the
 controlling process to keep track of all the children that were created. Here's
 an example of what that looks like:
 
+{{< terminal >}}
 {{< highlight text "hl_lines=13-16 26-28">}}
 $ ctrun -l child ./a.out &
 [1] 2714
@@ -220,6 +224,7 @@ automatically generating Rust FFI bindings to the C library using [bindgen][].
 Let's start by creating a new library crate, and adding `bindgen` to to the
 build-dependencies:
 
+{{< terminal >}}
 ```text
 $ cargo new --lib contract-sys
 $ cd contract-sys
@@ -281,6 +286,7 @@ The **contract-sys** crate has since been published to
 We have our bindings, and now it's time to use them! Create a new project and
 add our dependency:
 
+{{< terminal >}}
 ```text
 $ cargo new contract-example
 $ cd contract-example
@@ -414,6 +420,7 @@ println!("Here are the pids in the contract:\n {pids:#?}");
 
 The moment of truth:
 
+{{< terminal >}}
 ```text
 $ cargo r -- 2621
    Compiling contract-example v0.1.0 (/home/link/src/contract-example)
@@ -446,6 +453,7 @@ debugging. Let's fire up `mdb(1)` and see what sticks out to us.
 We start by checking the status of the core file, enabling symbol demangling,
 and dumping out the stack trace:
 
+{{< terminal >}}
 ```text
 $ mdb core
 Loading modules: [ libumem.so.1 libc.so.1 libnvpair.so.1 ld.so.1 ]
@@ -492,6 +500,7 @@ To turn on some of the debugging features we can set the `UMEM_DEBUG`
 environment variable as well as `UMEM_LOGGING`. Both of these variables are
 described in [umem_debug(3MALLOC)][umem_debug]:
 
+{{< terminal >}}
 ```text
 $ UMEM_LOGGING=transaction UMEM_DEBUG=default ./target/debug/contract-example 2621
 Here are the pids in the contract:
@@ -506,6 +515,7 @@ Abort (core dumped)
 
 With a new core file generated let's hop back over to `mdb`:
 
+{{< terminal >}}
 {{< highlight text "hl_lines=36 56">}}
 $ mdb core
 Loading modules: [ libumem.so.1 libc.so.1 libnvpair.so.1 ld.so.1 ]
@@ -672,6 +682,7 @@ fn main() -> Result<()> {
 }
 ```
 
+{{< terminal >}}
 ```text
 $ cargo r -- 2621
    Compiling contract-example v0.1.0 (/home/link/src/contract-example)
