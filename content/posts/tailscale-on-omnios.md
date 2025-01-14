@@ -88,9 +88,15 @@ vnic on demand in the zones configuration and assign it an IP address, then the
 zone to act as a packet forwarder preforming NAT for your *tailnet*. From the
 globalzone create a *vnic* over the interface of your choice like so:
 
+
+{{< note >}}
+This blog post originally used `tailscale0` and has been updated to use
+`tailnode0`. Using `tailscale0` will cause conflicts with tailscale itself!
+{{< /note >}}
+
 {{< terminal >}}
 ```
-# dladm create-vnic -l igb1 tailscale0
+# dladm create-vnic -l igb1 tailnode0
 ```
 
 With the *vnic* created we can move onto creating the zone. This can be
@@ -131,7 +137,7 @@ resolvers=[
 match="/dev/tun"
 
 [[net]]
-physical="tailscale0"
+physical="tailnode0"
 {{< /highlight >}}
 
 Next we can boot the zone and wait for all services to come online:
@@ -148,7 +154,7 @@ network and assign a default route:
 
 {{< terminal >}}
 ```
-root@tailnode:~# ipadm create-addr -T static -a 10.0.1.58/24 tailscale0/v4
+root@tailnode:~# ipadm create-addr -T static -a 10.0.1.58/24 tailnode0/v4
 root@tailnode:~# route -p add default 10.0.1.1
 ```
 
@@ -245,11 +251,11 @@ interested in having your zone act as an *exitnode*.
 In order for our tailscale node to make a useful exit node we need to set the
 interface to preform NAT for us. Luckily this is pretty easy to do on OmniOS.
 First we need to tell `ipnat(8)` that we want to map things from the carrier
-grade network arriving on the `tailscale0` vnic to anywhere:
+grade network arriving on the `tailnode0` vnic to anywhere:
 
 {{< filename file="/etc/ipf/ipnat.conf" >}}
 ```text
-map tailscale0 100.64.0.0/10 -> 0/32
+map tailnode0 100.64.0.0/10 -> 0/32
 ```
 
 Then we can enable `ipfilter` (which controls ipnat) and enable forwarding like

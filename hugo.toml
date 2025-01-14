@@ -5,7 +5,7 @@ theme = 'paper'
 
 disqusShortname = 'lightsandshapes'
 
-paginate = 8
+pagination.pagerSize = 8 
 
 custom_css = ["css/custom.css"]
 
@@ -15,11 +15,11 @@ custom_css = ["css/custom.css"]
   color = 'gray'                           # linen, wheat, gray, light
 
   # header social icons
-  twitter = 'papertigerss'                         # twitter.com/YOUR_TWITTER_ID
+  bluesky = 'papertigers.net'                      # bsky.app/profile/YOUR_BLUESKY_ID
   github = 'papertigers'                           # github.com/YOUR_GITHUB_ID
   instagram = 'chromaticadventure'                 # instagram.com/YOUR_INSTAGRAM_ID
   mastodon = 'https://hachyderm.io/@papertigers'   # e.g. 'https://mastodon.instance/@xxx'
-  #rss = true                                       # show rss icon
+  #rss = true                                      # show rss icon
 
   # home page profile
   avatar = 'mike@mikezeller.net'                 # gravatar email or image url
